@@ -1,6 +1,6 @@
 # Modern ELT Pipeline
 
-A containerized proof of concept for a modern ELT pipeline. The repository is intentionally structured as a reusable skeleton for data engineering projects rather than as a domain-specific analytics product.
+A local ELT pipeline that demonstrates how Python, PostgreSQL, dbt, Dagster, and Metabase work together to ingest, validate, transform, and serve analytics-ready data.
 
 It uses a small sample orders CSV to demonstrate the full workflow:
 
