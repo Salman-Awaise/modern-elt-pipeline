@@ -1,4 +1,4 @@
-# Modern ELT Pipeline POC
+# Modern ELT Pipeline
 
 A containerized proof of concept for a modern ELT pipeline. The repository is intentionally structured as a reusable skeleton for data engineering projects rather than as a domain-specific analytics product.
 
