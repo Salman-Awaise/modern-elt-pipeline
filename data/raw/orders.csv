@@ -1,0 +1,8 @@
+order_id,customer_id,order_date,status,quantity,unit_price,country
+1001,501,2026-04-20,completed,2,29.99,us
+1002,502,2026-04-20,completed,1,199.00,us
+1003,503,2026-04-21,cancelled,1,45.00,ca
+1004,501,2026-04-21,returned,1,29.99,us
+1005,504,2026-04-22,completed,3,15.50,gb
+1006,505,2026-04-22,pending,4,9.99,us
+1007,506,2026-04-23,completed,2,75.00,ca

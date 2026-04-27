@@ -1,0 +1,47 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: modern_elt_postgres
+    environment:
+      POSTGRES_DB: analytics
+      POSTGRES_USER: analytics
+      POSTGRES_PASSWORD: analytics
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U analytics -d analytics"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  dagster:
+    build: .
+    container_name: modern_elt_dagster
+    env_file:
+      - .env.example
+    environment:
+      DAGSTER_HOME: /opt/dagster/app/.dagster
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/opt/dagster/app
+    working_dir: /opt/dagster/app
+    command: sh -c "mkdir -p /opt/dagster/app/.dagster && dagster dev -h 0.0.0.0 -p 3000 -m modern_elt_pipeline.orchestration.definitions"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  metabase:
+    image: metabase/metabase:v0.50.32
+    container_name: modern_elt_metabase
+    ports:
+      - "3001:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres_data:

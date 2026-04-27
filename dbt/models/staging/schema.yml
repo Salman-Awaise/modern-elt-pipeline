@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: stg_orders
+    description: Cleaned and typed order records.
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+          - unique
+      - name: customer_id
+        tests:
+          - not_null
+      - name: order_date
+        tests:
+          - not_null
+      - name: status
+        tests:
+          - accepted_values:
+              values: ['completed', 'cancelled', 'returned', 'pending']
+      - name: quantity
+        tests:
+          - not_null
+      - name: gross_revenue
+        tests:
+          - not_null

@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: fct_order_metrics
+    description: Order activity metrics by order date and country for BI reporting.
+    columns:
+      - name: order_date
+        tests:
+          - not_null
+      - name: country
+        tests:
+          - not_null
+      - name: completed_revenue
+        tests:
+          - not_null
