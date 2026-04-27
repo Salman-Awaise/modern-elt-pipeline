@@ -19,7 +19,6 @@ This project demonstrates how the core pieces of a modern data pipeline fit toge
 - Metabase can connect to the modeled data for exploration.
 - GitHub Actions provides a lightweight CI entry point.
 
-The sample data is deliberately small. The goal is to show architecture, boundaries, and workflow, not data volume.
 
 ## Architecture
 
@@ -274,21 +273,6 @@ ruff check .
 pytest
 ```
 
-The current CI is intentionally lightweight. A stronger production-style CI workflow would also start Postgres and run `dbt build`.
-
-## Extending The Skeleton
-
-Useful next iterations:
-
-- replace the CSV source with an API or object storage source
-- add another entity, such as customers or products
-- add relationship tests between entities
-- switch raw loading from replace to incremental upsert
-- add dbt source freshness checks
-- generate dbt docs
-- add a Metabase dashboard export
-- add CI that runs Postgres and dbt end-to-end
-- add lineage or observability tooling such as OpenLineage
 
 ## License
 
