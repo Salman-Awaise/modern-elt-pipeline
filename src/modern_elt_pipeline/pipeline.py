@@ -1,6 +1,6 @@
 import logging
 import uuid
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 from sqlalchemy import text
@@ -14,10 +14,15 @@ from modern_elt_pipeline.quality.raw_orders import validate_raw_orders
 logger = logging.getLogger(__name__)
 
 
+def _utcnow() -> datetime:
+    # naive UTC, matching the timestamp columns in audit.pipeline_runs
+    return datetime.now(timezone.utc).replace(tzinfo=None)
+
+
 def ingest_raw_orders(csv_path: str = "data/raw/orders.csv") -> dict[str, int | str]:
     configure_logging()
     run_id = str(uuid.uuid4())
-    started_at = datetime.utcnow()
+    started_at = _utcnow()
     engine = get_engine()
     ensure_schemas(engine)
 
@@ -33,8 +38,10 @@ def ingest_raw_orders(csv_path: str = "data/raw/orders.csv") -> dict[str, int | 
             {"run_id": run_id, "started_at": started_at},
         )
 
+    rows_extracted = 0
     try:
         orders = extract_orders(Path(csv_path))
+        rows_extracted = len(orders)
         rows_loaded = load_raw_orders(orders, engine)
         validate_raw_orders(engine)
         status = "success"
@@ -62,8 +69,8 @@ def ingest_raw_orders(csv_path: str = "data/raw/orders.csv") -> dict[str, int | 
                 {
                     "run_id": run_id,
                     "status": status,
-                    "finished_at": datetime.utcnow(),
-                    "rows_extracted": rows_loaded,
+                    "finished_at": _utcnow(),
+                    "rows_extracted": rows_extracted,
                     "rows_loaded": rows_loaded,
                     "message": message,
                 },

@@ -1,5 +1,12 @@
 # Modern ELT Pipeline
 
+[![CI](https://github.com/Salman-Awaise/modern-elt-pipeline/actions/workflows/ci.yml/badge.svg)](https://github.com/Salman-Awaise/modern-elt-pipeline/actions/workflows/ci.yml)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Postgres](https://img.shields.io/badge/PostgreSQL-warehouse-4169E1?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![dbt](https://img.shields.io/badge/dbt-Core-FF694B?logo=dbt&logoColor=white)](https://www.getdbt.com/)
+[![Dagster](https://img.shields.io/badge/Dagster-orchestration-654FF0?logo=dagster&logoColor=white)](https://dagster.io/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](#license)
+
 A local ELT pipeline that demonstrates how Python, PostgreSQL, dbt, Dagster, and Metabase work together to ingest, validate, transform, and serve analytics-ready data.
 
 It uses a small sample orders CSV to demonstrate the full workflow:
@@ -233,6 +240,21 @@ dbt tests:
 - `order_id` is unique
 - `status` values are accepted
 - final mart fields are populated
+
+## Configuration
+
+Every setting is read from the environment (see `.env.example`), with defaults that
+match the Docker Compose stack:
+
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `POSTGRES_HOST` | `localhost` | Warehouse host |
+| `POSTGRES_PORT` | `5432` | Warehouse port |
+| `POSTGRES_DB` | `analytics` | Database name |
+| `POSTGRES_USER` | `analytics` | Database user |
+| `POSTGRES_PASSWORD` | `analytics` | Database password |
+| `RAW_SCHEMA` | `raw` | Schema the ingestion writes to and validates |
+| `DBT_SCHEMA` | `analytics` | Schema prefix dbt builds into |
 
 ## Development
 
